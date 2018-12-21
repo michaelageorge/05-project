@@ -1,0 +1,23 @@
+{
+  "name": "bitmap-project",
+  "version": "1.0.0",
+  "description": "Lab 05, Code 401",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelageorge/05-project.git"
+  },
+  "author": "Michael George, Brent Woodward",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/michaelageorge/05-project/issues"
+  },
+  "homepage": "https://github.com/michaelageorge/05-project#readme",
+  "dependencies": {
+    "eslint": "^5.10.0",
+    "jest": "^23.6.0"
+  }
+}
