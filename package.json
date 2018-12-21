@@ -4,7 +4,10 @@
   "description": "Lab 05, Code 401",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "index.js",
+    "test": "jest --verbose --coverage",
+    "test-watch": "jest --watchAll --verbose --coverage",
+    "lint": "eslint **/*.js"
   },
   "repository": {
     "type": "git",

@@ -10,8 +10,6 @@
 
 * [repo](https://github.com/michaelageorge/05-project)
 * [travis](https://travis-ci.com/michaelageorge/05-project)
-* [back-end](http://xyz.com)
-* [front-end](http://xyz.com)
 
 ### Modules
 #### `modulename.js`
@@ -24,16 +22,11 @@ Usage Notes or examples
 Usage Notes or examples
 
 ### Setup
-#### `.env` requirements
-* `PORT` - Port Number
-* `MONGODB_URI` - URL to the running mongo instance/db
 
 #### Running the app
 * `npm start`
 * Endpoint: `/foo/bar/`
   * Returns a JSON object with abc in it.
-* Endpoint: `/bing/zing/`
-  * Returns a JSON object with xyz in it.
 
 #### Tests
 * How do you run tests?
@@ -43,10 +36,6 @@ Use BDD describe and test methods to define discriptive tests and increase reada
 Each test callback should aim to test a small well defined feature of a function
 Write tests to ensure each function behaves correctly with valid and invalud inputs
 The CLI should be tested without using child_process or any equivilant third party librarys
-
-#### UML
-Link to an image of the UML for your application and response to events
-
 
 Assignment 1: Do this with callbacks
 Assignment 2: Modularize the code
