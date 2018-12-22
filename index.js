@@ -7,6 +7,7 @@ const fs = require('fs');
  * @param filePath
  * @constructor
  */
+
 function Bitmap(filePath) {
   this.file = filePath;
 }
@@ -15,16 +16,29 @@ function Bitmap(filePath) {
  * Parser -- accepts a buffer and will parse through it, according to the specification, creating object properties for each segment of the file
  * @param buffer
  */
+
 Bitmap.prototype.parse = function(buffer) {
   this.buffer = buffer;
   this.type = buffer.toString('utf-8', 0, 2);
-  //... and so on
+  this.size = buffer.readInt32LE(2);
+  this.offset = buffer.readInt32LE(10);
+  this.headerSize = buffer.readInt32LE(14);
+  this.width = buffer.readInt32LE(18);
+  this.height = buffer.readInt32LE(22);
+  this.colorPlanes = buffer.readInt16LE(26);
+  this.colorBits = buffer.readInt16LE(28);
+  this.colorArray = buffer.slice(54, this.offset);
+  this.pixelArray = buffer.slice(1078);
+  if (!this.colorArray.length) {
+    throw 'Invalid format!';
+  }
 };
 
 /**
  * Transform a bitmap using some set of rules. The operation points to some function, which will operate on a bitmap instance
  * @param operation
  */
+
 Bitmap.prototype.transform = function(operation) {
   // This is really assumptive and unsafe
   transforms[operation](this);
@@ -37,6 +51,7 @@ Bitmap.prototype.transform = function(operation) {
  * Pro Tip: Use "pass by reference" to alter the bitmap's buffer in place so you don't have to pass it around ...
  * @param bmp
  */
+
 const transformGreyscale = (bmp) => {
 
   console.log('Transforming bitmap into greyscale', bmp);
@@ -55,6 +70,7 @@ const doTheInversion = (bmp) => {
  * A dictionary of transformations
  * Each property represents a transformation that someone could enter on the command line and then a function that would be called on the bitmap to do this job
  */
+
 const transforms = {
   greyscale: transformGreyscale,
   invert: doTheInversion
