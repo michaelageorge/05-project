@@ -21,7 +21,7 @@ Bitmap.prototype.parse = function(buffer) {
   this.buffer = buffer;
   this.type = buffer.toString('utf-8', 0, 2);
   this.size = buffer.readInt32LE(2);
-  this.offset = buffer.readInt32LE(10);
+  this.offset = buffer.readInt32LE(10); //1146
   this.headerSize = buffer.readInt32LE(14);
   this.width = buffer.readInt32LE(18);
   this.height = buffer.readInt32LE(22);
@@ -54,8 +54,16 @@ Bitmap.prototype.transform = function(operation) {
 
 const transformGreyscale = (bmp) => {
 
-  console.log('Transforming bitmap into greyscale', bmp);
+  // console.log('Transforming bitmap into greyscale', bmp);
 
+  for(let i = 0; i < bmp.colorArray.length; i += 4) {
+    // console.log('i', i);
+    bmp.colorArray[i] = 225;                            //red
+    bmp.colorArray[i + 1] = bmp.colorArray[i + 1];      //green
+    bmp.colorArray[i + 2] = bmp.colorArray[i + 2];      //blue
+    bmp.colorArray[i + 3] = 0;                          //opacity (alpha)
+  }
+  
   //TODO: Figure out a way to validate that the bmp instance is actually valid before trying to transform it
 
   //TODO: alter bmp to make the image greyscale ...
@@ -81,10 +89,7 @@ const transforms = {
 function transformWithCallbacks() {
 
   fs.readFile(file, (err, buffer) => {
-
-    if (err) {
-      throw err;
-    }
+    if (err) { throw err; }
 
     bitmap.parse(buffer);
 
@@ -93,12 +98,10 @@ function transformWithCallbacks() {
     // Note that this has to be nested!
     // Also, it uses the bitmap's instance properties for the name and thew new buffer
     fs.writeFile(bitmap.newFile, bitmap.buffer, (err, out) => {
-      if (err) {
-        throw err;
-      }
+      if (err) { throw err; }
+      // console.log('the color palette', bitmap.colorArray);
       console.log(`Bitmap Transformed: ${bitmap.newFile}`);
     });
-
   });
 }
 
