@@ -7,27 +7,25 @@ fs.readFile('./assets/baldy.bmp', (err, data) => {
 
   let dataRaw = [];
 
-  dataRaw.push(data.slice(6, 15))
-  // dataRaw.push(data.slice(54, this.offset))
+  // dataRaw.push(data.slice(54, 1146));
+  // console.log('offset', data.readInt32LE(10)); //1146
+
+  fs.writeFile('./dataRaw.txt', dataRaw.toString('hex'), err => {
+    if(err) { throw err; }
+  });
 
 
-  // fs.writeFile('./dataRaw.txt', dataRaw, err => {
-  //   if(err) { throw err; }
-  // });
+  console.log('color plane?', data.readInt16LE(26));
+  console.log('color array', data.slice(54, 1146));
+  // console.log('data.readInt16LE(26)');
 
-  console.log('data', dataRaw);
-  
+
 });
 
-// function(buffer) {
-//   this.buffer = buffer;
-//   this.type = buffer.toString('utf-8', 0, 2);
-//   this.size = buffer.readInt32LE(2);
-//   this.offset = buffer.readInt32LE(10);
-//   this.headerSize = buffer.readInt32LE(14);
-//   this.width = buffer.readInt32LE(18);
-//   this.height = buffer.readInt32LE(22);
-//   this.colorPlanes = buffer.readInt16LE(26);
-//   this.colorBits = buffer.readInt16LE(28);
-//   this.colorPalette = buffer.readInt32(46);
-//   this.impColors = buffer.readInt32(50);
+// function parse(buffer) {
+//   let colorArray = buffer.slice(54, this.offset);
+//   console.log('This is the colorArray', colorArray);
+// }
+
+// this.colorPlanes = buffer.readInt16LE(26)
+
