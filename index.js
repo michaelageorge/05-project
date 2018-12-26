@@ -53,26 +53,39 @@ Bitmap.prototype.transform = function(operation) {
  */
 
 const transformGreyscale = (bmp) => {
-
-  // console.log('Transforming bitmap into greyscale', bmp);
-
   for(let i = 0; i < bmp.colorArray.length; i += 4) {
-    // console.log('i', i);
-    bmp.colorArray[i] = 225;                            //red
-    bmp.colorArray[i + 1] = bmp.colorArray[i + 1];      //green
-    bmp.colorArray[i + 2] = bmp.colorArray[i + 2];      //blue
-    bmp.colorArray[i + 3] = 0;                          //opacity (alpha)
+    let red = bmp.colorArray[i];
+    let green = bmp.colorArray[i + 1];
+    let blue = bmp.colorArray[i + 2];
+    let index = bmp.colorArray[i + 3];
+
+    let color = Math.round((red + green + blue)/3);
+
+    bmp.colorArray[i] = color;
+    bmp.colorArray[i + 1] = color;
+    bmp.colorArray[i + 2] = color;
   }
-  
-  //TODO: Figure out a way to validate that the bmp instance is actually valid before trying to transform it
-
-  //TODO: alter bmp to make the image greyscale ...
-
 };
 
 const doTheInversion = (bmp) => {
-  bmp = {};
-}
+  for(let i = 0; i < bmp.colorArray.length; i += 4) {
+    bmp.colorArray[i] = 0xFF - bmp.colorArray[i];
+    bmp.colorArray[i + 1] = 0xFF - bmp.colorArray[i + 1];
+    bmp.colorArray[i + 2] = 0xFF - bmp.colorArray[i + 2];
+  }
+};
+
+const turnOffTheLights = (bmp) => {
+  for(let i = 0; i < bmp.pixelArray.length; i++) {
+    bmp.pixelArray[i] = bmp.pixelArray[i] / 0x0F;
+  }
+};
+
+const scramble = (bmp) => {
+  for(let i = 0; i < bmp.pixelArray.length; i++) {
+    bmp.pixelArray[i] = bmp.pixelArray[bmp.pixelArray.length - i];
+  }
+};
 
 /**
  * A dictionary of transformations
@@ -81,7 +94,9 @@ const doTheInversion = (bmp) => {
 
 const transforms = {
   greyscale: transformGreyscale,
-  invert: doTheInversion
+  invert: doTheInversion,
+  lights: turnOffTheLights,
+  scramble: scramble,
 };
 
 // ------------------ GET TO WORK ------------------- //
@@ -99,7 +114,6 @@ function transformWithCallbacks() {
     // Also, it uses the bitmap's instance properties for the name and thew new buffer
     fs.writeFile(bitmap.newFile, bitmap.buffer, (err, out) => {
       if (err) { throw err; }
-      // console.log('the color palette', bitmap.colorArray);
       console.log(`Bitmap Transformed: ${bitmap.newFile}`);
     });
   });

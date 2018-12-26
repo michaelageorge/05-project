@@ -15,8 +15,8 @@ fs.readFile('./assets/baldy.bmp', (err, data) => {
   });
 
 
-  console.log('color plane?', data.readInt16LE(26));
-  console.log('color array', data.slice(54, 1146));
+  console.log('bit', data.readInt32LE(34));
+  // console.log('color array', data.slice(54, 1146));
   // console.log('data.readInt16LE(26)');
 
 
