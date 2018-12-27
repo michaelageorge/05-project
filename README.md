@@ -4,6 +4,8 @@
 ## Bitmap Project - Lab 05 
 
 ### Author: Michael George and Brent Woodward
+#### Collaberators: Ryan G., Jared P., Heather C., George, Siobhan N.
+
 
 ### Links and Resources
 [![Build Status](https://travis-ci.com/michaelageorge/05-project.svg?branch=master)](https://travis-ci.com/michaelageorge/05-project)
@@ -12,14 +14,19 @@
 * [travis](https://travis-ci.com/michaelageorge/05-project)
 
 ### Modules
-#### `modulename.js`
-##### Exported Values and Methods
+#### `darken.js`
+###### `darken(bmp) -> bitmap image`
+Changes the hue of the image to be very dark and writes a new bitmap file.
 
-###### `foo(thing) -> string`
-Usage Notes or examples
 
-###### `bar(array) -> array`
-Usage Notes or examples
+###### `greyscale(bmp) -> bitmap image`
+Modifies all colors to a greyscale pallette and writes a new bmp file.
+
+###### `invert(bmp) -> bitmap image`
+Inverts all of the colors in the input image and writes a new bmp file.
+
+###### `scramble(bmp) -> bitmap image`
+Takes in an image and transforms it to a scramble of the given images, and writes a new bmp file.
 
 ### Setup
 
