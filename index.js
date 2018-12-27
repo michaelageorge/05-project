@@ -45,47 +45,6 @@ Bitmap.prototype.transform = function(operation) {
   this.newFile = this.file.replace(/\.bmp/, `.${operation}.bmp`);
 };
 
-/**
- * Sample Transformer (greyscale)
- * Would be called by Bitmap.transform('greyscale')
- * Pro Tip: Use "pass by reference" to alter the bitmap's buffer in place so you don't have to pass it around ...
- * @param bmp
- */
-
-const transformGreyscale = (bmp) => {
-  for(let i = 0; i < bmp.colorArray.length; i += 4) {
-    let red = bmp.colorArray[i];
-    let green = bmp.colorArray[i + 1];
-    let blue = bmp.colorArray[i + 2];
-    let index = bmp.colorArray[i + 3];
-
-    let color = Math.round((red + green + blue)/3);
-
-    bmp.colorArray[i] = color;
-    bmp.colorArray[i + 1] = color;
-    bmp.colorArray[i + 2] = color;
-  }
-};
-
-const doTheInversion = (bmp) => {
-  for(let i = 0; i < bmp.colorArray.length; i += 4) {
-    bmp.colorArray[i] = 0xFF - bmp.colorArray[i];
-    bmp.colorArray[i + 1] = 0xFF - bmp.colorArray[i + 1];
-    bmp.colorArray[i + 2] = 0xFF - bmp.colorArray[i + 2];
-  }
-};
-
-const turnOffTheLights = (bmp) => {
-  for(let i = 0; i < bmp.pixelArray.length; i++) {
-    bmp.pixelArray[i] = bmp.pixelArray[i] / 0x0F;
-  }
-};
-
-const scramble = (bmp) => {
-  for(let i = 0; i < bmp.pixelArray.length; i++) {
-    bmp.pixelArray[i] = bmp.pixelArray[bmp.pixelArray.length - i];
-  }
-};
 
 /**
  * A dictionary of transformations
@@ -93,10 +52,10 @@ const scramble = (bmp) => {
  */
 
 const transforms = {
-  greyscale: transformGreyscale,
-  invert: doTheInversion,
-  lights: turnOffTheLights,
-  scramble: scramble,
+  greyscale: require('./transformations/greyscale.js'),
+  invert: require('./transformations/invert.js'),
+  lights: require('./transformations/darken.js'),
+  scramble: require('./transformations/scramble.js'),
 };
 
 // ------------------ GET TO WORK ------------------- //
